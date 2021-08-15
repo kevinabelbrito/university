@@ -1,0 +1,9 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.form-input {
+    @apply block w-full my-3 border-b-2 border-blue-500 py-3 pr-5 pl-10;
+}
