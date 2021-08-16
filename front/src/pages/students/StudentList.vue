@@ -27,10 +27,14 @@
                 </button>
             </div>
         </div>
-        <list :students="students" />
+        <list 
+            :students="students" 
+            @load-data="getStudents"
+        />
         <form-modal
             v-if="createEditForm"
             @close-modal="toggleCreateEditForm"
+            @load-data="getStudents"
         />
     </div>
 </template>
@@ -47,27 +51,12 @@ export default {
     },
     components: { List, FormModal },
     methods: {
-        getStudents() {
-            let items = []
-            for(let i= 0; i < 20; i++) {
-                const element = {
-                    id: parseInt(Math.random()*100),
-                    first_name: 'Kevin Abel',
-                    last_name: 'Brito Diaz',
-                    id_type: 'Passport',
-                    id_number: '1234567894',
-                    date_of_birth: '1993-01-21',
-                    genre: 'Male',
-                    career: {
-                        id: 1,
-                        name: 'System Engineer'
-                    },
-                    email_address: 'kevin@test.com',
-                    phone_number: '+584141234567'
-                }
-                items.push(element)
-            }
-            this.students = items
+        async getStudents() {
+            await this.axios.get('students')
+                .then(response => {
+                    this.students = response.data
+                })
+                .catch(error => console.log(error))
         },
         toggleCreateEditForm() {
             this.createEditForm = !this.createEditForm
