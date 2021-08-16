@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StudentRequest extends FormRequest
@@ -28,7 +29,7 @@ class StudentRequest extends FormRequest
             'last_name' => ['required', 'min:3', 'max:80'],
             'id_type'  => ['required', 'max:30'],
             'id_number' => ['required', 'min:6', 'max:80'],
-            'genre' => ['required', 'in:["Female", "Male", "Other"]'],
+            'genre' => ['required', Rule::in(["Female", "Male", "Other"])],
             'date_of_birth' => ['required', 'date_format:Y-m-d'],
             'career_id' => ['required', 'integer', 'exists:careers,id'],
             'email_address' => ['sometimes', 'required', 'email'],
