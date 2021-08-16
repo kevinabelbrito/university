@@ -2,7 +2,7 @@
     <!-- component -->
     <div class="min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none" id="modal-id">
         <div class="absolute bg-black bg-opacity-70 inset-0 z-0" @click.prevent="closeModal"></div>
-        <div class="w-full 2xl:max-w-2xl max-w-xl relative mx-auto my-auto rounded-xl shadow-modal bg-white">
+        <div class="w-full 2xl:max-w-2xl max-w-xl relative mx-auto my-auto rounded-xl shadow-modal bg-white overflow-auto max-h-full">
             <!--content-->
             <div class="">
                 <!--body-->
@@ -12,7 +12,7 @@
                             First Name
                         </label>
                         <div class="relative">
-                            <input type="text" name="first_name" id="first_name" class="form-input">
+                            <input type="text" name="first_name" id="first_name" class="form-input" v-model="dataForm.first_name">
                             <span class="absolute left-0 top-0 p-3">
                                 <fa icon="user" />
                             </span>
@@ -23,7 +23,7 @@
                             Last Name
                         </label>
                         <div class="relative">
-                            <input type="text" name="last_name" id="last_name" class="form-input">
+                            <input type="text" name="last_name" id="last_name" class="form-input" v-model="dataForm.last_name">
                             <span class="absolute left-0 top-0 p-3">
                                 <fa icon="times" />
                             </span>
@@ -34,7 +34,7 @@
                             ID Type
                         </label>
                         <div class="relative">
-                            <select name="id_type" id="id_type" class="form-input">
+                            <select name="id_type" id="id_type" class="form-input" v-model="dataForm.id_type">
                                 <option value="">Select an option</option>
                                 <option :value="type" v-for="type of getIdTypes" :key="type">{{ type }}</option>
                             </select>
@@ -48,7 +48,7 @@
                             ID Number
                         </label>
                         <div class="relative">
-                            <input type="text" name="id_number" id="id_number" class="form-input">
+                            <input type="text" name="id_number" id="id_number" class="form-input" v-model="dataForm.id_number">
                             <span class="absolute left-0 top-0 p-3">
                                 <fa icon="user" />
                             </span>
@@ -59,7 +59,7 @@
                             Date of Birth
                         </label>
                         <div class="relative">
-                            <input type="date" name="date_of_birth" id="date_of_birth" class="form-input">
+                            <input type="date" name="date_of_birth" id="date_of_birth" class="form-input" v-model="dataForm.date_of_birth">
                             <span class="absolute left-0 top-0 p-3">
                                 <fa icon="calendar" />
                             </span>
@@ -70,7 +70,7 @@
                             Genre
                         </label>
                         <div class="relative">
-                            <select name="genre" id="genre" class="form-input">
+                            <select name="genre" id="genre" class="form-input" v-model="dataForm.genre">
                                 <option value="">Select an option</option>
                                 <option :value="type" v-for="type of getGenres" :key="type">{{ type }}</option>
                             </select>
@@ -84,7 +84,7 @@
                             E-Mail
                         </label>
                         <div class="relative">
-                            <input type="email" name="email_address" id="email_address" class="form-input">
+                            <input type="email" name="email_address" id="email_address" class="form-input" v-model="dataForm.email_address">
                             <span class="absolute left-0 top-0 p-3">
                                 <fa icon="envelope" />
                             </span>
@@ -95,7 +95,7 @@
                             Phone Number
                         </label>
                         <div class="relative">
-                            <input type="tel" name="phone_number" id="phone_number" class="form-input">
+                            <input type="tel" name="phone_number" id="phone_number" class="form-input" v-model="dataForm.phone_number">
                             <span class="absolute left-0 top-0 p-3">
                                 <fa icon="phone" />
                             </span>
@@ -106,9 +106,9 @@
                             Career
                         </label>
                         <div class="relative">
-                            <select name="career" id="career" class="form-input">
+                            <select name="career" id="career" class="form-input" v-model="dataForm.career_id">
                                 <option value="">Select an option</option>
-                                <option :value="career.id" v-for="career of getCareers" :key="career.id">{{ career.name }}</option>
+                                <option :value="career.id" v-for="career of careers" :key="career.id">{{ career.name }}</option>
                             </select>
                             <span class="absolute left-0 top-0 p-3">
                                 <fa icon="user" />
@@ -142,7 +142,18 @@ import Swal from 'sweetalert2'
 export default {
     data() {
         return {
-            dataForm: {}
+            dataForm: {
+                first_name: '',
+                last_name: '',
+                id_type: '',
+                id_number: '',
+                date_of_birth: '',
+                genre: '',
+                email_address: '',
+                phone_number: '',
+                career_id: ''
+            },
+            careers: []
         }
     },
     props:['student'],
@@ -153,41 +164,45 @@ export default {
         },
         getGenres() {
             return ['Female', 'Male', 'Other']
-        },
-        getCareers() {
-            return [
-                {
-                    id: 1,
-                    name: 'System Engineer'
-                },
-                {
-                    id: 2,
-                    name: 'Industrial Engineer'
-                },
-                {
-                    id: 3,
-                    name: 'Civil Engineer'
-                },
-                {
-                    id: 4,
-                    name: 'Electronic Engineer'
-                }
-            ]
         }
     },
     methods: {
         async saveStudent() {
-            await Swal.fire({
-                title: 'Well done!',
-                text: 'The student has been registered successfully',
-                icon: 'success',
-                timer: 5000,
-                showConfirmButton: false,
-                toast: true,
-                position: 'bottom'
-            })
-            this.closeModal()
+            console.log(this.dataForm);
+            await this.axios.post('students', this.dataForm)
+                .then(response => {
+                    console.log(response)
+                    Swal.fire({
+                        title: 'Well done!',
+                        text: 'The student has been registered successfully',
+                        icon: 'success',
+                        timer: 5000,
+                        showConfirmButton: false,
+                        toast: true,
+                        position: 'bottom'
+                    })
+                    this.$emit('load-data')
+                    this.closeModal()
+                })
+                .catch(error => {
+                    console.log(error)
+                    Swal.fire({
+                        title: 'Ups!',
+                        text: error.response.data.message,
+                        icon: 'error',
+                        toast:true,
+                        position: 'bottom'
+                    })
+                })
+        },
+        async getCareers() {
+            await this.axios.get('careers')
+                    .then(response => this.careers = response.data)
+                    .catch(error => console.log(error))
         }
-    }
+    },
+    mounted() {
+        this.getCareers()
+    },
 }
 </script>
