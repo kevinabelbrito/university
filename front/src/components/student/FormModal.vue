@@ -8,29 +8,29 @@
                 <!--body-->
                 <div class="grid lg:grid-cols-2 grid-cols-1 items-center gap-5 p-10">
                     <div class="">
-                        <label for="first_name" class="font-bold">
+                        <label for="first_name" class="form-label">
                             First Name
                         </label>
                         <div class="relative">
                             <input type="text" name="first_name" id="first_name" class="form-input" v-model="dataForm.first_name">
-                            <span class="absolute left-0 top-0 p-3">
+                            <span class="form-icon">
                                 <fa icon="user" />
                             </span>
                         </div>
                     </div>
                     <div class="">
-                        <label for="last_name" class="font-bold">
+                        <label for="last_name" class="form-label">
                             Last Name
                         </label>
                         <div class="relative">
                             <input type="text" name="last_name" id="last_name" class="form-input" v-model="dataForm.last_name">
-                            <span class="absolute left-0 top-0 p-3">
-                                <fa icon="times" />
+                            <span class="form-icon">
+                                <fa icon="book" />
                             </span>
                         </div>
                     </div>
                     <div class="">
-                        <label for="id_type" class="font-bold">
+                        <label for="id_type" class="form-label">
                             ID Type
                         </label>
                         <div class="relative">
@@ -38,35 +38,35 @@
                                 <option value="">Select an option</option>
                                 <option :value="type" v-for="type of getIdTypes" :key="type">{{ type }}</option>
                             </select>
-                            <span class="absolute left-0 top-0 p-3">
-                                <fa icon="user" />
+                            <span class="form-icon">
+                                <fa icon="id-card-alt" />
                             </span>
                         </div>
                     </div>
                     <div class="">
-                        <label for="id_number" class="font-bold">
+                        <label for="id_number" class="form-label">
                             ID Number
                         </label>
                         <div class="relative">
                             <input type="text" name="id_number" id="id_number" class="form-input" v-model="dataForm.id_number">
-                            <span class="absolute left-0 top-0 p-3">
-                                <fa icon="user" />
+                            <span class="form-icon">
+                                <fa icon="id-card" />
                             </span>
                         </div>
                     </div>
                     <div class="">
-                        <label for="date_of_birth" class="font-bold">
+                        <label for="date_of_birth" class="form-label">
                             Date of Birth
                         </label>
                         <div class="relative">
                             <input type="date" name="date_of_birth" id="date_of_birth" class="form-input" v-model="dataForm.date_of_birth">
-                            <span class="absolute left-0 top-0 p-3">
+                            <span class="form-icon">
                                 <fa icon="calendar" />
                             </span>
                         </div>
                     </div>
                     <div class="">
-                        <label for="genre" class="font-bold">
+                        <label for="genre" class="form-label">
                             Genre
                         </label>
                         <div class="relative">
@@ -74,35 +74,35 @@
                                 <option value="">Select an option</option>
                                 <option :value="type" v-for="type of getGenres" :key="type">{{ type }}</option>
                             </select>
-                            <span class="absolute left-0 top-0 p-3">
-                                <fa icon="user" />
+                            <span class="form-icon">
+                                <fa icon="venus-mars" />
                             </span>
                         </div>
                     </div>
                     <div class="">
-                        <label for="email_address" class="font-bold">
+                        <label for="email_address" class="form-label">
                             E-Mail
                         </label>
                         <div class="relative">
                             <input type="email" name="email_address" id="email_address" class="form-input" v-model="dataForm.email_address">
-                            <span class="absolute left-0 top-0 p-3">
+                            <span class="form-icon">
                                 <fa icon="envelope" />
                             </span>
                         </div>
                     </div>
                     <div class="">
-                        <label for="phone_number" class="font-bold">
+                        <label for="phone_number" class="form-label">
                             Phone Number
                         </label>
                         <div class="relative">
                             <input type="tel" name="phone_number" id="phone_number" class="form-input" v-model="dataForm.phone_number">
-                            <span class="absolute left-0 top-0 p-3">
+                            <span class="form-icon">
                                 <fa icon="phone" />
                             </span>
                         </div>
                     </div>
                     <div class="">
-                        <label for="career" class="font-bold">
+                        <label for="career" class="form-label">
                             Career
                         </label>
                         <div class="relative">
@@ -110,14 +110,14 @@
                                 <option value="">Select an option</option>
                                 <option :value="career.id" v-for="career of careers" :key="career.id">{{ career.name }}</option>
                             </select>
-                            <span class="absolute left-0 top-0 p-3">
-                                <fa icon="user" />
+                            <span class="form-icon">
+                                <fa icon="medal" />
                             </span>
                         </div>
                     </div>
                 </div>
                 <!--footer-->
-                <div class="flex justify-center gap-5 border-t border-conexoo-gray-600 p-5">
+                <div class="flex justify-center gap-5 border-t border-gray-200 p-5">
                     <button class="bg-blue-500 border border-blue-500 text-white hover:text-blue-500 hover:bg-white font-medium 2xl:text-base text-sm py-2.5 px-10 transition-all duration-500" @click.prevent="closeModal">
                         <fa icon="times" />
                         <span class="ml-3">

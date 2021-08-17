@@ -5,5 +5,17 @@
 @tailwind utilities;
 
 .form-input {
-    @apply block w-full my-3 border-b-2 border-blue-500 py-3 pr-5 pl-10;
+    @apply block w-full my-3 border-b-2 border-blue-500 py-3 pr-5 pl-10 font-normal text-sm text-black text-opacity-50;
+}
+
+.form-icon {
+    @apply absolute left-0 top-0 p-3 text-black text-opacity-50;
+}
+
+.form-label {
+    @apply font-medium text-black text-opacity-50;
+}
+
+.details-label {
+    @apply font-bold text-black text-opacity-30;
 }

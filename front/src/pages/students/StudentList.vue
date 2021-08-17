@@ -1,13 +1,13 @@
 <template>
     <div class="bg-white p-10 rounded-lg">
-        <div class="flex md:flex-nowrap flex-wrap items-center md:justify-between justify-center md:gap-3 gap-5">
-            <div class="md:w-auto w-full md:text-left text-center">
+        <div class="flex lg:flex-nowrap flex-wrap items-center lg:justify-between justify-center lg:gap-3 gap-5">
+            <div class="lg:w-auto w-full lg:text-left text-center">
                 <span class="text-gray-800 text-2xl font-semibold">
                     Students
                 </span>
             </div>
             <div class="text-center w-auto">
-                <div class="flex sm:flex-nowrap flex-wrap items-center justify-center gap-5">
+                <div class="flex md:flex-nowrap flex-wrap items-center justify-center gap-5">
                     <div class="relative md:w-96 w-full">
                         <input 
                             type="text" 

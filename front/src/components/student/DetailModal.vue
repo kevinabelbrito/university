@@ -2,13 +2,14 @@
     <!-- component -->
     <div class="min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none" id="modal-id">
         <div class="absolute bg-black bg-opacity-70 inset-0 z-0" @click.prevent="closeModal"></div>
-        <div class="w-full 2xl:max-w-2xl max-w-xl relative mx-auto my-auto rounded-xl shadow-modal bg-white">
+        <div class="w-full max-w-3xl relative mx-auto my-auto rounded-xl shadow-modal bg-white">
             <!--content-->
             <div class="">
                 <!--body-->
                 <div class="grid lg:grid-cols-2 grid-cols-1 items-center gap-5 p-10">
                     <div class="">
-                        <span class="font-bold">
+                        <span class="details-label">
+                            <fa icon="user" class="mr-2" />
                             First Name
                         </span>
                         <span class="font-light ml-5">
@@ -16,7 +17,8 @@
                         </span>
                     </div>
                     <div class="">
-                        <span class="font-bold">
+                        <span class="details-label">
+                            <fa icon="book" class="mr-2" />
                             Last Name
                         </span>
                         <span class="font-light ml-5">
@@ -24,7 +26,8 @@
                         </span>
                     </div>
                     <div class="">
-                        <span class="font-bold">
+                        <span class="details-label">
+                            <fa icon="id-card-alt" class="mr-2" />
                             ID Type
                         </span>
                         <span class="font-light ml-5">
@@ -32,7 +35,8 @@
                         </span>
                     </div>
                     <div class="">
-                        <span class="font-bold">
+                        <span class="details-label">
+                            <fa icon="id-card" class="mr-2" />
                             ID Number
                         </span>
                         <span class="font-light ml-5">
@@ -40,7 +44,8 @@
                         </span>
                     </div>
                     <div class="">
-                        <span class="font-bold">
+                        <span class="details-label">
+                            <fa icon="calendar" class="mr-2" />
                             Date of Birth
                         </span>
                         <span class="font-light ml-5">
@@ -48,7 +53,8 @@
                         </span>
                     </div>
                     <div class="">
-                        <span class="font-bold">
+                        <span class="details-label">
+                            <fa icon="venus-mars" class="mr-2" />
                             Genre
                         </span>
                         <span class="font-light ml-5">
@@ -56,7 +62,8 @@
                         </span>
                     </div>
                     <div class="">
-                        <span class="font-bold">
+                        <span class="details-label">
+                            <fa icon="envelope" class="mr-2" />
                             E-Mail
                         </span>
                         <span class="font-light ml-5">
@@ -64,7 +71,8 @@
                         </span>
                     </div>
                     <div class="">
-                        <span class="font-bold">
+                        <span class="details-label">
+                            <fa icon="phone" class="mr-2" />
                             Phone Number
                         </span>
                         <span class="font-light ml-5">
@@ -72,7 +80,8 @@
                         </span>
                     </div>
                     <div class="">
-                        <span class="font-bold">
+                        <span class="details-label">
+                            <fa icon="medal" class="mr-2" />
                             Career
                         </span>
                         <span class="font-light ml-5">
@@ -81,7 +90,7 @@
                     </div>
                 </div>
                 <!--footer-->
-                <div class="flex justify-center gap-5 border-t border-conexoo-gray-600 p-5">
+                <div class="flex justify-center gap-5 border-t border-gray-200 p-5">
                     <button class="bg-blue-500 border border-blue-500 text-white hover:text-blue-500 hover:bg-white font-medium 2xl:text-base text-sm py-2.5 px-10 transition-all duration-500" @click.prevent="closeModal">
                         <fa icon="times" />
                         <span class="ml-3">
