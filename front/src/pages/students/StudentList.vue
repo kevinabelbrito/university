@@ -39,9 +39,9 @@
                 </button>
             </div>
         </div>
-        <div class="" v-if="students.length > 0">
+        <div class="" v-if="dataList.length > 0">
             <list
-                :students="students" 
+                :students="dataList" 
                 @load-data="setSearch"
                 @edit-student="editStudent($event)"
             />
@@ -51,23 +51,13 @@
                         {{ pagination.to }} of {{ pagination.total }} registers
                     </span>
                     <select name="per_page" id="per_page" class="border-b-2 border-blue-500 py-3 ml-3 md:text-sm text-xs text-black text-opacity-70 font-normal" v-model="itemsPerPage" @change="setSearch">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
+                        <option :value="row" v-for="row in itemsPerPageSelector" :key="row">{{ row }}</option>
                     </select>
                 </div>
-                <div class="flex flex-wrap items-center md:justify-end justify-center gap-3">
-                    <button 
-                        class="text-white font-light md:text-sm text-xs rounded border px-3 py-2 transition-all duration-500" 
-                        :class="paginationActive(pag.active)" 
-                        v-for="pag in pagination.links" 
-                        :key="pag.label" 
-                        @click="loadPage(pag.url)"
-                    >
-                        <span v-html="pag.label"></span>
-                    </button>
-                </div>
+                <pagination 
+                    :pagination="pagination"
+                    @load-page="loadPage($event)"
+                />
             </div>
         </div>
         <div class="p-3 my-10" v-else>
@@ -85,34 +75,21 @@
 <script>
 import List from "../../components/student/List.vue";
 import FormModal from "../../components/student/FormModal.vue";
+import Pagination from "../../components/Pagination.vue";
+import { tablePaginateMixin } from "../../mixins/tablePaginateMixin";
 export default {
     data() {
         return {
-            students: [],
-            pagination: {},
-            itemsPerPage: 10,
-            endpoint: 'students',
+            baseEndpoint: 'students',
             createEditForm: false,
             currentStudentId: null,
-            search: ''
+            // itemsPerPage: 60,
+            // itemsPerPageSelector: ['30', '60', '100', '200', '500'],
         }
     },
-    components: { List, FormModal },
+    mixins: [tablePaginateMixin],
+    components: { List, FormModal, Pagination },
     methods: {
-        async getStudents() {
-            await this.axios.get(this.endpoint, {
-                params:{
-                    per_page: this.itemsPerPage,
-                    search: this.search
-                }
-            })
-                .then(response => {
-                    this.students = response.data.data
-                    this.pagination = response.data.meta
-                    console.log(this.pagination)
-                })
-                .catch(error => console.log(error))
-        },
         toggleCreateEditForm(isEdit = false) {
             this.currentStudentId = !isEdit ? null : this.currentStudentId
             this.createEditForm = !this.createEditForm
@@ -120,25 +97,7 @@ export default {
         editStudent(studentId) {
             this.currentStudentId = studentId
             this.toggleCreateEditForm(true)
-        },
-        setSearch() {
-            this.endpoint = 'students'
-            this.getStudents()
-        },
-        cleanFilter() {
-            this.search = '',
-            this.getStudents()
-        },
-        loadPage(page) {
-            this.endpoint = page
-            this.getStudents()
-        },
-        paginationActive(isActive) {
-            return isActive ? 'bg-pink-700 border-pink-700' : 'bg-blue-500 border-blue-500 hover:text-blue-500 hover:bg-white'
         }
-    },
-    beforeMount(){
-        this.getStudents()
     }
 }
 </script>
