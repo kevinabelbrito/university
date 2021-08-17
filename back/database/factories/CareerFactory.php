@@ -22,7 +22,9 @@ class CareerFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->jobTitle,
+            'code_number' => $this->faker->numberBetween(1,999),
+            'code_string' => $this->faker->randomLetter
         ];
     }
 }
