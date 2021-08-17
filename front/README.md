@@ -1,4 +1,4 @@
-# conexoo
+# University
 
 ## Project setup
 ```
