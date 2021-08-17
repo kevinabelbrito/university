@@ -24,7 +24,7 @@
                     </div>
                     <div class="">
                         <button class="py-3 px-10 text-center bg-pink-700 text-white border border-pink-700 hover:bg-white hover:text-pink-700 transition-all duration-500" @click="cleanFilter">
-                            <fa icon="refresh" />
+                            <fa icon="redo-alt" />
                             <span class="ml-2">
                                 Reset filter
                             </span>
@@ -42,19 +42,32 @@
         <div class="" v-if="students.length > 0">
             <list
                 :students="students" 
-                @load-data="getStudents"
+                @load-data="setSearch"
                 @edit-student="editStudent($event)"
             />
-            <div class="flex flex-nowrap items-center justify-end gap-3 my-5">
-                <button 
-                    class="text-white font-light text-sm rounded border px-3 py-2 transition-all duration-500" 
-                    :class="paginationActive(pag.active)" 
-                    v-for="pag in pagination.links" 
-                    :key="pag.label" 
-                    @click="loadPage(pag.url)"
-                >
-                    <span v-html="pag.label"></span>
-                </button>
+            <div class="flex md:flex-nowrap flex-wrap items-center md:justify-between justify-center md:gap-3 gap-5 my-5">
+                <div class="">
+                    <span class="text-lg font-light">
+                        {{ pagination.to }} of {{ pagination.total }} registers
+                    </span>
+                    <select name="per_page" id="per_page" class="border-b-2 border-blue-500 py-3 ml-3 md:text-sm text-xs text-black text-opacity-70 font-normal" v-model="itemsPerPage" @change="setSearch">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <div class="flex flex-wrap items-center md:justify-end justify-center gap-3">
+                    <button 
+                        class="text-white font-light md:text-sm text-xs rounded border px-3 py-2 transition-all duration-500" 
+                        :class="paginationActive(pag.active)" 
+                        v-for="pag in pagination.links" 
+                        :key="pag.label" 
+                        @click="loadPage(pag.url)"
+                    >
+                        <span v-html="pag.label"></span>
+                    </button>
+                </div>
             </div>
         </div>
         <div class="p-3 my-10" v-else>
@@ -63,7 +76,7 @@
         <form-modal
             v-if="createEditForm"
             @close-modal="toggleCreateEditForm"
-            @load-data="getStudents"
+            @load-data="setSearch"
             :studentId="currentStudentId"
         />
     </div>
@@ -77,6 +90,7 @@ export default {
         return {
             students: [],
             pagination: {},
+            itemsPerPage: 10,
             endpoint: 'students',
             createEditForm: false,
             currentStudentId: null,
@@ -88,7 +102,7 @@ export default {
         async getStudents() {
             await this.axios.get(this.endpoint, {
                 params:{
-                    per_page: this.pagination.per_page,
+                    per_page: this.itemsPerPage,
                     search: this.search
                 }
             })

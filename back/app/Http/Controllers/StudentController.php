@@ -17,11 +17,12 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $search = $request->search ? $request->search : '';
+        $per_page = $request->per_page ? $request->per_page : 10;
         $query = Student::with('career')
                         ->listSearch($search)
                         ->orderBy('students.first_name', 'ASC')
                         ->orderBy('students.last_name', 'ASC')
-                        ->paginate(10);
+                        ->paginate($per_page);
         return StudentResource::collection($query);
     }
 
