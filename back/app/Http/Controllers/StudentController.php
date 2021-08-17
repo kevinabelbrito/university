@@ -16,7 +16,11 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $data = StudentResource::collection(Student::with('career')->get());
+        $query = Student::with('career')
+                        ->orderBy('students.first_name', 'ASC')
+                        ->orderBy('students.last_name', 'ASC')
+                        ->get();
+        $data = StudentResource::collection($query);
         return response()->json($data);
     }
 

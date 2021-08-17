@@ -15,7 +15,7 @@ class CareerController extends Controller
      */
     public function index()
     {
-        $data = CareerResource::collection(Career::all());
+        $data = CareerResource::collection(Career::orderBy('name', 'ASC')->get());
         return response()->json($data);
     }
 
