@@ -32,14 +32,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="flex flex-nowrap items-center justify-end gap-5 my-5">
-            <button class="bg-blue-500 text-white border border-blue-500 px-3 py-2">
-                <fa icon="chevron-left" />
-            </button>
-            <button class="bg-blue-500 text-white border border-blue-500 px-3 py-2">
-                <fa icon="chevron-right" />
-            </button>
-        </div>
         <detail-modal 
             v-if="details"
             @close-modal="toggleDetailModal"

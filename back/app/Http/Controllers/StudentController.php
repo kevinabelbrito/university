@@ -14,14 +14,15 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search ? $request->search : '';
         $query = Student::with('career')
+                        ->listSearch($search)
                         ->orderBy('students.first_name', 'ASC')
                         ->orderBy('students.last_name', 'ASC')
-                        ->get();
-        $data = StudentResource::collection($query);
-        return response()->json($data);
+                        ->paginate(10);
+        return StudentResource::collection($query);
     }
 
     /**
