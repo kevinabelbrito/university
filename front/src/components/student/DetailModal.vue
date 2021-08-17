@@ -1,10 +1,14 @@
 <template>
     <!-- component -->
     <div class="min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none" id="modal-id">
-        <div class="absolute bg-black bg-opacity-70 inset-0 z-0" @click.prevent="closeModal"></div>
+        <div class="absolute bg-black bg-opacity-70 inset-0 z-0"></div>
         <div class="w-full max-w-3xl relative mx-auto my-auto rounded-xl shadow-modal bg-white">
             <!--content-->
-            <div class="">
+            <div class="relative">
+                <!--close buttom-->
+                <button class="absolute top-0 right-0 text-black text-opacity-30 hover:text-red-500 hover:text-opacity-50 p-5 transition-all duration-500" @click="closeModal">
+                    <fa icon="times" />
+                </button>
                 <!--body-->
                 <div class="grid lg:grid-cols-2 grid-cols-1 items-center gap-5 p-10">
                     <div class="">
