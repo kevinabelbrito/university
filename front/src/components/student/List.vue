@@ -21,7 +21,7 @@
                             <button class="inline-block py-2 px-3 rounded mx-2 hover:text-white hover:bg-green-500 border border-green-500 bg-white text-green-500 transition-all duration-500" @click="loadDetails(student)">
                                 <fa icon="eye" />
                             </button>
-                            <button class="inline-block py-2 px-3 rounded mx-2 hover:text-white hover:bg-yellow-400 border border-yellow-400 bg-white text-yellow-400 transition-all duration-500">
+                            <button class="inline-block py-2 px-3 rounded mx-2 hover:text-white hover:bg-yellow-400 border border-yellow-400 bg-white text-yellow-400 transition-all duration-500" @click="editItem(student.id)">
                                 <fa icon="edit" />
                             </button>
                             <button class="inline-block py-2 px-3 rounded mx-2 hover:text-white hover:bg-red-500 border border-red-500 bg-white text-red-500 transition-all duration-500" @click="deleteItem(student.id)">
@@ -43,6 +43,7 @@
         <detail-modal 
             v-if="details"
             @close-modal="toggleDetailModal"
+            @edit-student="editItem($event)"
             :student="currentStudent"
         />
     </div>
@@ -68,6 +69,9 @@ export default {
         },
         toggleDetailModal() {
             this.details = !this.details
+        },
+        editItem(studentId) {
+            this.$emit('edit-student', studentId)
         },
         deleteItem(studentId) {
             console.log(studentId)

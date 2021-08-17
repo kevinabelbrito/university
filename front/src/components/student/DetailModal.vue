@@ -88,7 +88,7 @@
                             Close
                         </span>
                     </button>
-                    <button class="bg-yellow-400 border border-yellow-400 text-white hover:text-yellow-400 hover:bg-white font-medium 2xl:text-base text-sm py-2.5 px-10 transition-all duration-500" @click.prevent="closeModal">
+                    <button class="bg-yellow-400 border border-yellow-400 text-white hover:text-yellow-400 hover:bg-white font-medium 2xl:text-base text-sm py-2.5 px-10 transition-all duration-500" @click.prevent="editStudent()">
                         <fa icon="edit" />
                         <span class="ml-3">
                             Edit
@@ -107,6 +107,12 @@ export default {
         return {}
     },
     props:['student'],
-    mixins: [modalMixin]
+    mixins: [modalMixin],
+    methods: {
+        editStudent() {
+            this.$emit('edit-student', this.student.id)
+            this.closeModal()
+        }
+    },
 }
 </script>

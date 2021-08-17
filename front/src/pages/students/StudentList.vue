@@ -30,11 +30,13 @@
         <list 
             :students="students" 
             @load-data="getStudents"
+            @edit-student="editStudent($event)"
         />
         <form-modal
             v-if="createEditForm"
             @close-modal="toggleCreateEditForm"
             @load-data="getStudents"
+            :studentId="currentStudentId"
         />
     </div>
 </template>
@@ -46,7 +48,8 @@ export default {
     data() {
         return {
             students: [],
-            createEditForm: false
+            createEditForm: false,
+            currentStudentId: null
         }
     },
     components: { List, FormModal },
@@ -58,8 +61,13 @@ export default {
                 })
                 .catch(error => console.log(error))
         },
-        toggleCreateEditForm() {
+        toggleCreateEditForm(isEdit = false) {
+            this.currentStudentId = !isEdit ? null : this.currentStudentId
             this.createEditForm = !this.createEditForm
+        },
+        editStudent(studentId) {
+            this.currentStudentId = studentId
+            this.toggleCreateEditForm(true)
         }
     },
     beforeMount(){

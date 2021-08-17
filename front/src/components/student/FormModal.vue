@@ -142,21 +142,11 @@ import Swal from 'sweetalert2'
 export default {
     data() {
         return {
-            dataForm: {
-                first_name: '',
-                last_name: '',
-                id_type: '',
-                id_number: '',
-                date_of_birth: '',
-                genre: '',
-                email_address: '',
-                phone_number: '',
-                career_id: ''
-            },
+            dataForm: {},
             careers: []
         }
     },
-    props:['student'],
+    props:['studentId'],
     mixins: [modalMixin],
     computed: {
         getIdTypes() {
@@ -167,8 +157,15 @@ export default {
         }
     },
     methods: {
-        async saveStudent() {
-            console.log(this.dataForm);
+        saveStudent() {
+            if (this.studentId) {
+                this.editStudent(this.studentId)
+            }
+            else {
+                this.newStudent()
+            }
+        },
+        async newStudent() {
             await this.axios.post('students', this.dataForm)
                 .then(response => {
                     console.log(response)
@@ -185,7 +182,32 @@ export default {
                     this.closeModal()
                 })
                 .catch(error => {
-                    console.log(error)
+                    Swal.fire({
+                        title: 'Ups!',
+                        text: error.response.data.message,
+                        icon: 'error',
+                        toast:true,
+                        position: 'bottom'
+                    })
+                })
+        },
+        async editStudent(studentId) {
+            await this.axios.put(`students/${studentId}`, this.dataForm)
+                .then(response => {
+                    console.log(response)
+                    Swal.fire({
+                        title: 'Well done!',
+                        text: 'The student has been updated successfully',
+                        icon: 'success',
+                        timer: 5000,
+                        showConfirmButton: false,
+                        toast: true,
+                        position: 'bottom'
+                    })
+                    this.$emit('load-data')
+                    this.closeModal()
+                })
+                .catch(error => {
                     Swal.fire({
                         title: 'Ups!',
                         text: error.response.data.message,
@@ -199,10 +221,49 @@ export default {
             await this.axios.get('careers')
                     .then(response => this.careers = response.data)
                     .catch(error => console.log(error))
+        },
+        async loadStudent() {
+            if(this.studentId) {
+                await this.axios.get(`students/${this.studentId}`)
+                    .then(response => {
+                        this.setDataForm(response.data)
+                    })
+                    .catch(error => console.log(error))
+            }
+            else {
+                this.cleanForm()
+            }
+        },
+        cleanForm() {
+            this.dataForm = {
+                first_name: '',
+                last_name: '',
+                id_type: '',
+                id_number: '',
+                date_of_birth: '',
+                genre: '',
+                email_address: '',
+                phone_number: '',
+                career_id: ''
+            }
+        },
+        setDataForm(data) {
+            this.dataForm = {
+                first_name: data.first_name,
+                last_name: data.last_name,
+                id_type: data.id_type,
+                id_number: data.id_number,
+                date_of_birth: data.date_of_birth,
+                genre: data.genre,
+                email_address: data.email_address,
+                phone_number: data.phone_number,
+                career_id: data.career.id
+            }
         }
     },
     mounted() {
         this.getCareers()
+        this.loadStudent()
     },
 }
 </script>
